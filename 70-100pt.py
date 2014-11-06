@@ -15,8 +15,14 @@ root = Tk()
 drawpad = Canvas(root, width=800,height=600, background='white')
 player = drawpad.create_oval(390,580,410,600, fill="red")
 
-# Create your "enemies" here, before the class
+enemy1 = drawpad.create_rectangle(110,120,170,180, fill="blue")
+direction = 5
+enemy2 = drawpad.create_rectangle(200,300,250,390, fill="green")
+direction = 10
+enemy3 = drawpad.create_rectangle(370,510,290,530, fill="yellow")
+direction = 13
 
+# Create your "enemies" here, before the class
 
 class MyApp:
 	def __init__(self, parent):
@@ -44,19 +50,45 @@ class MyApp:
        	    self.right.configure(text="right", background= "red")
        	    self.right.grid(row=0,column=3)
        	    self.right.bind("<Button-1>", self.rightClicked)
+       	
        	    
        	    # No need to edit this - just includes the drawpad into our frame
        	    drawpad.pack(side=RIGHT)
        	    # call the animate function to start our recursion
        	    self.animate()
+       	    self.animate1()
+       	    self.animate2()
+
 	
 	def animate(self):
 	    global drawpad
 	    global player
-	    # Remember to include your "enemies" with "global"
-	    
-	    # Uncomment this when you're ready to test out your animation!
-	    #drawpad.after(10,self.animate)
+            global enemy1 
+            x1, y1, x2, y2 = drawpad.coords(enemy1)
+            if x2 > drawpad.winfo_width(): 
+                drawpad.move(enemy1, -(drawpad.winfo_width()) +(x2-x1), 0)
+            drawpad.move(enemy1,direction,0)
+            drawpad.after(10,self.animate)
+            
+	def animate1(self):
+	    global drawpad
+	    global player
+            global enemy2
+            x3, y3, x4, y4 = drawpad.coords(enemy2)
+            if x4 > drawpad.winfo_width(): 
+                drawpad.move(enemy2, -(drawpad.winfo_width()) +(x4-x3), 0)
+            drawpad.move(enemy2,direction,0)
+            drawpad.after(10,self.animate1)
+        
+        def animate2(self):
+	    global drawpad
+	    global player
+            global enemy3 
+            x5, y5, x6, y6 = drawpad.coords(enemy3)
+            if x6 > drawpad.winfo_width(): 
+                drawpad.move(enemy3, -(drawpad.winfo_width()) +(x6-x5), 0)
+            drawpad.move(enemy3,direction,0)
+            drawpad.after(10,self.animate2)
 		
 	def upClicked(self, event):   
 	   global oval
